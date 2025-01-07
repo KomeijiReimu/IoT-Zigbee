@@ -26,6 +26,13 @@ IEEE 802.15.4
 
 信标使能与非信标使能见ppt
 
+
+![[Pasted image 20250107221650.png]]
+
+![[Pasted image 20250107221657.png]]
+
+
+
 ---
 
 # 计算
@@ -78,3 +85,33 @@ IEEE 802.15.4
 这一章后PPT中的三张图对应三种极端情况，略微解释了为什么需要多次CCA（避免碰撞ACK）
 
 
+
+## 性能计算
+
+![[Pasted image 20250107221542.png]]
+
+![[Pasted image 20250107221549.png]]
+
+如果仅仅指定了源地址，那么最大数据载荷就是118(127-5-4)
+
+
+
+**关键计算**
+
+最终要计算一段数据传输出去*消耗的时间*和*吞吐率* $\displaystyle \large  \frac{有效载荷数据大小}{消耗时间}$
+
+其中包括下面几部分：
+
+1. 信道访问时间，即传输前的准备时间，由CSMA/CA产生
+	BE默认为3
+	`InitialbackoffPeriod`:退避初始周期
+	`aUnitBackoffPeriod`:退避单位周期
+	`CCA`:信道清除评估时间
+$$
+\large   最长访问时间=InitialbackoffPeriod+CCA=(2^3-1)*aUnitBackoffPeriod+CCA=7*320μs+128μs=2.368ms
+$$
+2. 有效载荷传输时间，见物理帧结构
+	传输速率(2.4GHz):250kbps
+	`aMaxPHYPacketSize` = 127
+$$
+\large 
