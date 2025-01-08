@@ -98,7 +98,11 @@ IEEE 802.15.4
 
 **关键计算**
 
+$\displaystyle \large 1symbol=16μs$
+backoffperiod 在IEEE 802.15.4 中的默认值为20 个symbols
+CCA默认占8符号周期
 最终要计算一段数据传输出去*消耗的时间*和*吞吐率* $\displaystyle \large  \frac{有效载荷数据大小}{消耗时间}$
+
 
 其中包括下面几部分：
 
@@ -108,7 +112,7 @@ IEEE 802.15.4
 	`aUnitBackoffPeriod`:退避单位周期
 	`CCA`:信道清除评估时间
 $$
-\large   最长访问时间=InitialbackoffPeriod+CCA=(2^3-1)*aUnitBackoffPeriod+CCA=7*320μs+128μs=2.368ms
+最长访问时间=InitialbackoffPeriod+CCA=(2^{BE}-1)*aUnitBackoffPeriod+CCA=7*(20*16)μs+(8*16)μs=7*320μs+128μs=2.368ms
 $$
 2. 有效载荷传输时间，见物理帧结构
 	传输速率(2.4GHz):250kbps
@@ -124,7 +128,7 @@ $$
 4. 从发送模式切换到接收模式的时间
 	`aTurnaroundTime`
 $$
-\large aTurnaroundTime=0.192ms 
+\large aTurnaroundTime=120.192ms 
 $$
 5. 重试时间
-	未收到ACK
+	未收到ACK时，需要等待`macAckWaitDuration`后重试
