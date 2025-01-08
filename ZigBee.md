@@ -112,6 +112,18 @@ $$
 $$
 2. 有效载荷传输时间，见物理帧结构
 	传输速率(2.4GHz):250kbps
-	`aMaxPHYPacketSize` = 127
+	`aMaxPHYPacketSize` = 127B
 $$
-\large 
+\large 数据帧传输时间= \frac{(aMaxPHYPacketSize+SHR+PHR)*8}{250*10^3}=\frac{(127+5+1)*8}{250*10^3}=4.256ms
+$$
+3. 确认帧(ACK)传输时间
+	*ACK不使用CSMA/CA*
+$$
+\large ACK时间=\frac{(2+1+2+5+1)*8}{250*10^3}=0.352ms
+$$
+4. 从发送模式切换到接收模式的时间
+	`aTurnaroundTime`
+$$
+\large aTurnaroundTime=0.192ms 
+$$
+
