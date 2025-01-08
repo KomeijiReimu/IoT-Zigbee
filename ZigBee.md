@@ -290,8 +290,10 @@ $$
 
 > 每一跳地址都应当由**计算**得出，不能瞪眼，不然不得分
 
-先算C_{skip}(d)
-
+先算`Cskip(d)`
+- Cskip(0)=31
+- Cskip(1)=7
+- Cskip(2)=1
 
 计算*38 -> 45*
 
@@ -300,5 +302,35 @@ C -> B -> A -> D -> 45
 
 **计算过程**：
 
+$\displaystyle \large C+C_{skip}(d-1)=38+1=39<45$ 因此**45不是C的后代**，**传给父节点B**
+$\displaystyle \large B+C_{skip}(d-1)=33+7=40<45$ 因此**45不是B的后代**，**传给父节点A**
 
+$\displaystyle \large A<45$ 且 $\displaystyle \large A+C_{skip}(d-1)=32+31=63>45$ 因此**45是A的后代**
+
+又因为 $\displaystyle \large A+R_{m}*C_{skip}(d)=32+4*31=156>45$ 因此**45不是A的直接子终端设备**，却在A的子路由节点范围内，因此下一跳是该子路由节点
+
+$\displaystyle \large A+1+int\left( \frac{45-(A+1)}{C_{skip}(d)} \right)*C_{skip}(d)=32+1+int\left( \frac{45-(32+1)}{7} \right)*7=33+1*7=40$ 即*下一跳*是**地址为40的子路由节点D**
+
+
+由于 $\displaystyle \large D+R_{m}*C_{skip}(d)=40+4*1=44<45$ ，因此**目的地址45是D的子终端设备**，直接路由即可
+
+总过程与瞪眼法一致
+
+
+计算*38 -> 92*
+
+瞪眼可知
+C -> B -> A -> O -> Q -> 92
+
+**计算过程**：
+
+C -> B -> A 与上面相同
+
+由于 $\displaystyle \large A+C_{skip}(d-1)=32+31=63<92$ 因此**92不是A的后代**，**传给父节点O**（协调器）
+协调器没有父节点，目标节点一定在是O的子节点范围内，所以直接计算 
+
+$\displaystyle \large O+1+int\left( \frac{92-(O+1)}{C_{skip}(d)} \right)*C_{skip}(d)=0+1+int\left( \frac{92-(0+1)}{31} \right)*31=1+2*31=63$
+即*下一跳*是**地址为63的子路由节点Q**
+
+又因为 $\displaystyle \large Q+C_{skip}(d-1)=63+31=94>92$ (注意这里还得满足$\displaystyle \large 92>Q$)，所以
 
