@@ -119,11 +119,12 @@ $$
 3. 确认帧(ACK)传输时间
 	*ACK不使用CSMA/CA*
 $$
-\large ACK时间=\frac{(2+1+2+5+1)*8}{250*10^3}=0.352ms
+\large ACK时间=\frac{(ACK帧字节+SHR+PHR)*8}{250*10^3}=\frac{(2+1+2+5+1)*8}{250*10^3}=0.352ms
 $$
 4. 从发送模式切换到接收模式的时间
 	`aTurnaroundTime`
 $$
 \large aTurnaroundTime=0.192ms 
 $$
-
+5. 重试时间
+	未收到ACK
