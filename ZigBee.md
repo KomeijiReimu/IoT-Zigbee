@@ -26,6 +26,12 @@ IEEE 802.15.4
 
 信标使能与非信标使能见ppt
 
+![[Pasted image 20250108124615.png]]
+
+![[Pasted image 20250108124624.png]]
+
+
+
 
 ![[Pasted image 20250107221650.png]]
 
@@ -114,7 +120,7 @@ CCA默认占8符号周期
 $$
 最长访问时间=InitialbackoffPeriod+CCA=(2^{BE}-1)*aUnitBackoffPeriod+CCA=7*(20*16)μs+(8*16)μs=7*320μs+128μs=2.368ms
 $$
-2. 有效载荷传输时间，见物理帧结构
+2. 有效载荷传输时间，最终要打包成物理帧的格式传输出去，帧头多余部分见物理帧结构
 	传输速率(2.4GHz):250kbps
 	`aMaxPHYPacketSize` = 127B
 $$
@@ -128,7 +134,50 @@ $$
 4. 从发送模式切换到接收模式的时间
 	`aTurnaroundTime`
 $$
-\large aTurnaroundTime=120.192ms 
+\large aTurnaroundTime=12symbols=0.192ms 
 $$
-5. 重试时间
+5. 重试时间（可能没有，视情况而定）
 	未收到ACK时，需要等待`macAckWaitDuration`后重试
+$$
+\large  macAckWaitDuration = 54 symbol periods =0.864 ms
+$$
+
+*练习1*
+![[Pasted image 20250108124813.png]]
+
+- 非信标使能，说明此时CW无效，只要空闲便可直接发送
+- 算法始终检测空闲，说明一次CSMA/CA即可
+- 需要ACK
+- 无重试
+- 最大数据帧有效载是114B
+> 注：这里说的114B指的是MAC帧中(数据帧就是MAC帧的一种)有114B的有效载荷，而MAC帧，也就是`PHY Payload`的总大小默认取最大，也就是127B
+
+此题情况与上文介绍公式的例题完全一致
+![[Pasted image 20250108130025.png]]
+
+有效数据传输速率为：
+$$
+\large  吞吐率=\frac{有效数据大小}{发送数据耗时}=\frac{114*8}{7.168*10^{-3}}=127232bps≈127kbps
+$$
+
+
+*练习2*
+![[Pasted image 20250108130607.png]]
+
+其中有25%的数据需要重传，且重传一次即可
+
+**如果有重传**，则发送的耗时过程为：
+> CSMA/CA -> 数据帧发送 -> 发送转为接收 -> 等待ACK失败-> CSMA/CA -> 数据帧发送 -> 发送转为接收 -> ACK发送
+
+总时间为：
+![[Pasted image 20250108131052.png]]
+
+14.656ms
+
+根据上面的题，无重传的发送时间为$\displaystyle 7.168ms$
+因此，75%的数据需要$\displaystyle 7.168ms$，25%的数据需要$\displaystyle 14.656ms$
+
+则平均数据帧传输时间：
+$$
+\large 7.168*0.75+14.656*0.25 
+$$
