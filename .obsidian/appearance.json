@@ -5,5 +5,6 @@
   "textFontFamily": "JetBrains Mono",
   "nativeMenus": false,
   "cssTheme": "Border",
-  "baseFontSize": 16
+  "baseFontSize": 16,
+  "showRibbon": true
 }

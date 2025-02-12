@@ -3,7 +3,6 @@
   "attachmentFolderPath": "./attachments",
   "promptDelete": false,
   "alwaysUpdateLinks": true,
-  "showRibbon": true,
   "pdfExportSettings": {
     "includeName": true,
     "pageSize": "A4",
